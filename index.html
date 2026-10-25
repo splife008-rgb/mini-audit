@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бесплатный мини-аудит рекламы за 24 часа</title>
+
+<!-- ШАГ 1. Вставь сюда код счётчика, который выдала Яндекс Метрика (весь блок <script>…</script> и <noscript>…</noscript>). -->
+
+
+<script>
+/* ШАГ 2. Впиши номер счётчика вместо 0 (только цифры, без кавычек). */
+var COUNTER_ID = 0;
+function goal(name){
+  try{ if(COUNTER_ID && typeof ym==="function"){ ym(COUNTER_ID,"reachGoal",name); } }catch(e){}
+  console.log("goal:",name);
+}
+</script>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1d1d1b;background:#f7f6f2}
+.wrap{max-width:720px;margin:0 auto;padding:40px 20px}
+h1{font-size:2rem;line-height:1.2;margin:0 0 12px}
+.lead{font-size:1.1rem;color:#4a4943;margin:0 0 28px}
+.btn{display:inline-block;background:#1d6b52;color:#fff;border:0;border-radius:10px;padding:14px 22px;font-size:1rem;cursor:pointer;text-decoration:none}
+.btn:hover{background:#17553f}
+ul{padding-left:20px;margin:28px 0}
+li{margin:10px 0}
+.card{background:#fff;border:1px solid #dedbd2;border-radius:14px;padding:22px;margin-top:32px}
+label{display:block;margin:12px 0 4px;font-size:.95rem}
+input{width:100%;padding:12px;border:1px solid #cfccc2;border-radius:8px;font-size:1rem}
+.ok{display:none;background:#e3f1ec;border-radius:10px;padding:14px;margin-top:14px}
+.err{color:#b3261e;font-size:.9rem;margin-top:8px;display:none}
+.note{font-size:.85rem;color:#6b6a64;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Бесплатный мини-аудит вашей рекламы за 24 часа</h1>
+  <p class="lead">Найдём, где уходит бюджет, и покажем три шага, как снизить цену заявки.</p>
+  <a class="btn" href="#form" id="cta">Получить аудит</a>
+
+  <ul>
+    <li>Разберём ваши объявления и ключевые запросы.</li>
+    <li>Посчитаем CPL и CPA по вашим данным.</li>
+    <li>Дадим план из трёх действий на неделю.</li>
+  </ul>
+
+  <div class="card" id="form">
+    <strong>Оставьте контакты, и мы свяжемся с вами</strong>
+    <form id="lead" novalidate>
+      <label for="name">Имя</label>
+      <input id="name" name="name" autocomplete="name">
+      <label for="phone">Телефон</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+7">
+      <div class="err" id="err">Укажите имя и телефон.</div>
+      <p><button class="btn" type="submit">Получить аудит</button></p>
+    </form>
+    <div class="ok" id="ok">Спасибо! Заявка принята.</div>
+  </div>
+
+  <p class="note">Учебная страница. Перед любой реальной рекламой замени оффер на настоящий и подключи сервис приёма заявок: сейчас форма никуда не отправляет данные.</p>
+</div>
+
+<script>
+/* Забираем UTM-метки из адреса, чтобы видеть источник заявки */
+var utm={};
+new URLSearchParams(location.search).forEach(function(v,k){ if(k.indexOf("utm_")===0){ utm[k]=v; } });
+
+document.getElementById("cta").addEventListener("click",function(){ goal("cta_click"); });
+
+document.getElementById("lead").addEventListener("submit",function(e){
+  e.preventDefault();
+  var n=document.getElementById("name").value.trim();
+  var p=document.getElementById("phone").value.replace(/\D/g,"");
+  var err=document.getElementById("err");
+  if(!n||p.length<10){ err.style.display="block"; return; }
+  err.style.display="none";
+  goal("lead_form_submit");
+  console.log("lead:",{name:n,phone:p,utm:utm});
+  document.getElementById("lead").style.display="none";
+  document.getElementById("ok").style.display="block";
+});
+</script>
+</body>
+</html>
